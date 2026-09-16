@@ -1,0 +1,200 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "JSON Component Validator API",
+    "description": "REST API service for validating software components against corresponding JSON Schemas and baseline template structures.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/v1/validate": {
+      "post": {
+        "summary": "Validate a component payload",
+        "description": "Accepts a component payload along with its type and validates it against both its registered JSON Schema and its baseline template.",
+        "operationId": "validateComponent",
+        "parameters": [
+          {
+            "name": "X-Correlation-ID",
+            "in": "header",
+            "description": "Optional Correlation ID for end-to-end transaction tracing.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComponentValidationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Validation result successfully computed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComponentValidationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed JSON request body.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ComponentValidationRequest": {
+        "type": "object",
+        "required": [
+          "componentPayload",
+          "componentType"
+        ],
+        "properties": {
+          "componentPayload": {
+            "oneOf": [
+              {
+                "type": "object"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "description": "The component JSON payload as an object or a raw JSON string."
+          },
+          "componentType": {
+            "type": "string",
+            "description": "The registered identifier of the component (e.g., 'medication', 'quiz')."
+          },
+          "correlationId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Optional Correlation ID (alternative to header passing)."
+          }
+        }
+      },
+      "ComponentValidationResponse": {
+        "type": "object",
+        "required": [
+          "isValid",
+          "correlationId",
+          "errors",
+          "timestamp"
+        ],
+        "properties": {
+          "isValid": {
+            "type": "boolean",
+            "description": "True if component satisfies both schema check and template structure check."
+          },
+          "correlationId": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique correlation tracker for logs and debugging."
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ComponentValidationError"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The ISO 8601 timestamp of validation execution."
+          }
+        }
+      },
+      "ComponentValidationError": {
+        "type": "object",
+        "required": [
+          "path",
+          "code",
+          "message"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "JSON Path pinpointing the violation (e.g., '$.parameters.dosage')."
+          },
+          "code": {
+            "type": "string",
+            "enum": [
+              "MISSING_REQUIRED_PARAMETER",
+              "INVALID_PARAMETER_TYPE",
+              "PREFILLED_FIELD_MISMATCH",
+              "SYNTAX_ERROR",
+              "SCHEMA_NOT_FOUND",
+              "SCHEMA_CORRUPTED"
+            ],
+            "description": "Machine-readable categorization code."
+          },
+          "message": {
+            "type": "string",
+            "description": "A developer-friendly explanation of why validation failed."
+          }
+        }
+      },
+      "ApiErrorResponse": {
+        "type": "object",
+        "required": [
+          "success",
+          "correlationId",
+          "error"
+        ],
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": false
+          },
+          "correlationId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "error": {
+            "type": "object",
+            "required": [
+              "code",
+              "message"
+            ],
+            "properties": {
+              "code": {
+                "type": "string",
+                "example": "MALFORMED_JSON_REQUEST"
+              },
+              "message": {
+                "type": "string",
+                "example": "Failed to parse incoming JSON payload."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

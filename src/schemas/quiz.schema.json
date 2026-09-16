@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "QuizComponentSchema",
+  "type": "object",
+  "required": [
+    "formatVersion",
+    "category",
+    "parameters"
+  ],
+  "properties": {
+    "formatVersion": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "parameters": {
+      "type": "object",
+      "required": [
+        "id",
+        "status"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
