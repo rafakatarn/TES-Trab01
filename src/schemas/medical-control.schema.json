@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MedicationControlComponentSchema",
+  "type": "object",
+  "required": [
+    "slug",
+    "name",
+    "type",
+    "parameters"
+  ],
+  "properties": {
+    "slug": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "color": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "shape": {
+      "type": "string"
+    },
+    "input_list": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "output_list": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "content_type": {
+      "type": "string"
+    },
+    "parameters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "slug",
+          "name",
+          "required",
+          "type"
+        ],
+        "properties": {
+          "slug": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "required": { "type": "boolean" },
+          "type": { "type": "string" }
+        }
+      }
+    },
+    "icons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,93 @@
+{
+    "slug": "medication_control",
+    "name": "Medication control",
+    "description": "Instruct about some medication and how to use it correctly.",
+    "type": "PERIODIC",
+    "color": "#db594f",
+    "icon": "healing",
+    "shape": "square",
+    "input_list": ["top"],
+    "output_list": ["bottom"],
+    "content_type": "unordered_list",
+    "parameters": [
+        {
+            "slug": "name",
+            "name": "Name",
+            "description": "Medication name",
+            "required": true,
+            "type": "text"
+        },
+        {
+            "slug": "description",
+            "name": "Description",
+            "description": "This medication is about...",
+            "required": true,
+            "type": "text"
+        },
+        {
+            "slug": "why",
+            "name": "Why",
+            "description": "This medication is important because...",
+            "required": true,
+            "type": "text"
+        },
+        {
+            "slug": "notes",
+            "name": "Notes",
+            "description": "Extra information.",
+            "required": false,
+            "type": "text"
+        },
+        {
+            "slug": "dosage",
+            "name": "Dosage",
+            "description": "Dosage along with its unit (ml, mg...)",
+            "required": true,
+            "type": "text"
+        },
+        {
+            "slug": "begin_date",
+            "name": "Begin date",
+            "description": "This medication should be taken from...",
+            "required": true,
+            "type": "date"
+        },
+        {
+            "slug": "end_date",
+            "name": "End date",
+            "description": "This medication should be repeated until...",
+            "required": false,
+            "type": "date"
+        },
+        {
+            "slug": "deadline",
+            "name": "Deadline",
+            "description": "This medication should be repeated until...",
+            "required": false,
+            "type": "time"
+        },
+        {
+            "slug": "weekday",
+            "name": "Weekday",
+            "description": "Which days of week does this element have to appear to the patient?",
+            "required": true,
+            "type": "weekday"
+        },
+        {
+            "slug": "time",
+            "name": "Start time",
+            "description": "What time does this element should be available for the patient?",
+            "required": true,
+            "type": "time"
+        }
+    ],
+    "icons": [
+        "",
+        "notes",
+        "help",
+        "comment",
+        "medical-services",
+        "play-arrow",
+        "stop"
+    ]
+}
