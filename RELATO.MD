@@ -10,7 +10,7 @@ O sistema faz parte de uma arquitetura na qual informações clínicas, como pro
 
 O desenvolvimento foi conduzido utilizando o **Spec-Kit**, seguindo o processo de **Spec-Driven Development (SDD)**.
 
-A geração das especificações e o apoio ao desenvolvimento foram realizados utilizando o **Gemini CLI**, com custo total de **R$ 19,12**.
+A geração das especificações e o apoio ao desenvolvimento foram realizados utilizando o **Gemini CLI**.
 
 As principais etapas realizadas foram:
 
